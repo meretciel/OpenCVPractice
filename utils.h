@@ -16,6 +16,7 @@
 
 namespace utils {
     std::string getTypeName( int x );
+
 }
 
 #endif /* UTILS_H_ */
