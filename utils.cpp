@@ -7,8 +7,13 @@
 
 
 
-
+#include <iostream>
 #include "utils.h"
+
+
+using cv::Size;
+using cv::Scalar;
+using cv::Mat;
 
 
 std::string utils::getTypeName( int x ) {
@@ -44,4 +49,60 @@ std::string utils::getTypeName( int x ) {
         default: return "Unknown type: " + std::to_string(x);
     }
 
+}
+
+
+cv::Mat utils::concat(const std::vector<cv::Mat>& matVec, int axis){
+    if (matVec.size() == 0) {return Mat{};}
+
+    if (axis == 0) {
+        int totalWidth = 0;
+        int height = -1;
+
+        for (const auto& mat : matVec) {
+            if (height == -1) {
+                height = mat.size().height;
+            }
+            else if (mat.size().height != height) {
+                throw std::runtime_error("Images have different height.");
+            }
+            totalWidth += mat.size().width;
+        }
+
+        cv::Mat outImg{cv::Size(totalWidth, height), matVec[0].type()};
+
+        int x = 0;
+        for (const auto& mat : matVec) {
+            auto width = mat.size().width;
+            cv::Rect roi{x,0,width, height};
+            mat.copyTo( outImg(roi) );
+            x += width;
+        }
+        return outImg;
+    }
+    else {
+        int totalHeight = 0;
+        int width = -1;
+
+        for (const auto& mat : matVec) {
+            if (width == -1) {
+                width = mat.size().width;
+            }
+            else if (mat.size().width != width) {
+                throw std::runtime_error("Images have different width.");
+            }
+            totalHeight += mat.size().height;
+        }
+
+        cv::Mat outImg{cv::Size(width, totalHeight), matVec[0].type()};
+
+        int y = 0;
+        for (const auto& mat : matVec) {
+            auto height = mat.size().height;
+            cv::Rect roi{0, y, width, height};
+            mat.copyTo( outImg(roi) );
+            y += height;
+        }
+        return outImg;
+    }
 }

@@ -1,4 +1,5 @@
 
+
 #include <iostream>
 #include <iomanip>
 #include <string>
@@ -23,6 +24,7 @@ using cv::Point;
 using cv::Scalar;
 using cv::Size;
 
+namespace {
 
 vector<Mat> makeImages(size_t n, Size size, int imgType) {
     vector<Mat> out{};
@@ -72,3 +74,4 @@ int main() {
     cout << "finished" << endl;
     return 0;
 }
+} // end of namespace

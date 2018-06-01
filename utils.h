@@ -12,10 +12,12 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
+#include <stdexcept>
 
 
 namespace utils {
     std::string getTypeName( int x );
+    cv::Mat concat(const std::vector<cv::Mat>& matVec, int axis=0);
 
 }
 
