@@ -15,9 +15,14 @@
 #include <stdexcept>
 
 
+
+
 namespace utils {
+
     std::string getTypeName( int x );
-    cv::Mat concat(const std::vector<cv::Mat>& matVec, int axis=0);
+    cv::Mat concat(const std::vector<cv::Mat>& matVec, int axis=0, double sepRatio=0, cv::Scalar sepColor=cv::Scalar{255,255,255,255});
+    cv::Mat addCaption( const cv::Mat& img, const std::string& text, int height, double xRatio, double yRatio, double scale=1,\
+                        cv::Scalar color=cv::Scalar{0,0,0,255}, int thickness=1, const std::string pos="bottom" );
 
 }
 
